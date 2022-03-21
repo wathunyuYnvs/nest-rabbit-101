@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "ms-vscode.atom-keybindings",
+        "mgmcdermott.vscode-language-babel",
+        "coenraads.bracket-pair-colorizer-2",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+        "pkief.material-icon-theme",
+        "esbenp.prettier-vscode",
+        "sonarsource.sonarlint-vscode",
+        "tabnine.tabnine-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "irongeek.vscode-env"
+    ]
+}
