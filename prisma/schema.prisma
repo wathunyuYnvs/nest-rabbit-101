@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+// model BaseModel {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model CirteriaType {
+  id       Int        @id @default(autoincrement())
+  name     String
+  criteria Cirteria[]
+}
+
+model Cirteria {
+  id             Int          @id @default(autoincrement())
+  criteriaType   CirteriaType @relation(fields: [criteriaTypeId], references: [id])
+  criteriaTypeId Int @map("criteria_type_id")
+  name           String
+  conditions     Condition[]
+}
+
+model Condition {
+  id         Int      @id @default(autoincrement())
+  name       String
+  criteria   Cirteria @relation(fields: [criteriaId], references: [id])
+  criteriaId Int @map("criteria_id")
+  @@map("conditions")
+}
+
+enum Role {
+  ADMIN     @map("admin")
+  CUSTOMER  @map("customer")
+
+  @@map("_Role")
+}

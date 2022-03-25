@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { PrismaService } from '../database/prisma.service';
 import {
     IExample,
     IExample2Service,
@@ -9,6 +10,10 @@ import {
 @Injectable()
 export class ExampleService implements IExampleService, IExample2Service {
     private readonly logger = new Logger('ExampleService');
+
+    constructor(
+        private readonly prismaSrvice: PrismaService
+    ) { }
 
     async testGet(id: string): Promise<IExample> {
         this.logger.verbose('Getting testGet');

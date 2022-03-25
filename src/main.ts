@@ -7,9 +7,24 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { RedisIoAdapter } from './common/adapters/redis.adapter';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+
+    app.connectMicroservice<MicroserviceOptions>({
+        transport: Transport.RMQ,
+        options: {
+            urls: ['amqp://user:password@rabbit-host:5672'],
+            queue: 'books_queue',
+            queueOptions: {
+                durable: false
+            }
+        }
+    })
+    
+    app.startAllMicroservices()
+
     app.enableShutdownHooks(); // graceful shutdown
     app.register(fastifyHelmet, {
         contentSecurityPolicy: {
@@ -21,6 +36,8 @@ async function bootstrap(): Promise<void> {
             },
         },
     });
+
+    
 
     if (process.env.NODE_ENV !== 'local') {
         app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));

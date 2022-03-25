@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { PrismaService } from '../database/prisma.service';
 import { ExampleServiceProvider } from './example.enum';
 import { ExampleService } from './example.service';
 
@@ -14,6 +15,7 @@ import { ExampleService } from './example.service';
             provide: ExampleServiceProvider.Example2,
             useExisting: ExampleService,
         },
+        PrismaService
     ],
     exports: [ExampleServiceProvider.Example],
 })

@@ -31,6 +31,8 @@ import { JwtAuthGuard } from './module/auth/guards/jwt-auth.guard';
 import { ExampleModule } from './module/example/example.module';
 // ======================================================================================
 import { RedisModule } from './service/redis/redis.module';
+import { ExampleSubscription } from './controller/example.subscription';
+import { hiController } from './controller/hi.controller';
 //                                      SERVICE
 //                                      readme
 //                When add any module, Please fill it in it's context.
@@ -40,7 +42,7 @@ import { RedisModule } from './service/redis/redis.module';
         RedisModule,
         WinstonCustomModule,
         ConfigModule.forRoot({
-            load: [appConfig, authConfig, databaseConfig, redisConfig],
+            load: [appConfig, authConfig, redisConfig],
             isGlobal: true,
         }),
         ThrottlerModule.forRoot({
@@ -58,7 +60,7 @@ import { RedisModule } from './service/redis/redis.module';
         EventsModule,
         ExampleModule,
     ],
-    controllers: [ExampleController],
+    controllers: [ExampleController, ExampleSubscription],
     providers: [
         {
             provide: APP_INTERCEPTOR,
